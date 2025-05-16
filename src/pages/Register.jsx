@@ -9,13 +9,18 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await registerUser(form);
 
-    if (res.token) {
-      toast.success('Cadastro realizado com sucesso!');
-      navigate('/login');
-    } else {
-      toast.error(res.error || 'Erro ao cadastrar');
+    try {
+      const res = await registerUser(form);
+
+      if (res.message === 'User registered successfully') {
+        toast.success('Cadastro realizado com sucesso!');
+        navigate('/login');
+      } else {
+        toast.error(res.message || 'Erro ao cadastrar');
+      }
+    } catch (err) {
+      toast.error('Erro de conexão com o servidor');
     }
   };
 

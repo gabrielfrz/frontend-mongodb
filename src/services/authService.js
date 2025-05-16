@@ -1,4 +1,4 @@
-const API_URL = 'https://backend-express-eight-ashen.vercel.app'; 
+const API_URL = 'https://backend-express-eight-ashen.vercel.app';
 
 export const registerUser = async (data) => {
   const res = await fetch(`${API_URL}/user/register`, {
@@ -10,7 +10,7 @@ export const registerUser = async (data) => {
 };
 
 export const loginUser = async (data) => {
-  const res = await fetch(`${API_URL}/login`, {
+  const res = await fetch(`${API_URL}/user/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -20,7 +20,7 @@ export const loginUser = async (data) => {
 
 export const getProtectedData = async () => {
   const token = localStorage.getItem('token');
-  const res = await fetch(`${API_URL}/secureExampleRoute`, {
+const res = await fetch(`${API_URL}/protected/secureExampleRoute`, {
     headers: {
       Authorization: `Bearer ${token}`
     }

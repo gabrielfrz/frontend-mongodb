@@ -9,14 +9,19 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await loginUser(form);
 
-    if (res.token) {
-      localStorage.setItem('token', res.token);
-      toast.success('Login realizado com sucesso!');
-      navigate('/dashboard');
-    } else {
-      toast.error(res.error || 'Email ou senha inválidos');
+    try {
+      const res = await loginUser(form);
+
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+        toast.success('Login realizado com sucesso!');
+        navigate('/dashboard');
+      } else {
+        toast.error(res.message || 'Erro ao fazer login');
+      }
+    } catch (err) {
+      toast.error('Erro de conexão com o servidor');
     }
   };
 

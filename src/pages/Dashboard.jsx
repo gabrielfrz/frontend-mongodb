@@ -9,13 +9,18 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getProtectedData();
-      if (res.error || res.message === 'Unauthorized') {
-        toast.error('Sessão expirada ou token inválido');
-        localStorage.removeItem('token');
-        navigate('/login');
-      } else {
-        setData(res);
+      try {
+        const res = await getProtectedData();
+
+        if (res.message === 'Unauthorized' || res.error) {
+          toast.error('Sessão expirada ou token inválido');
+          localStorage.removeItem('token');
+          navigate('/login');
+        } else {
+          setData(res);
+        }
+      } catch (error) {
+        toast.error('Erro ao carregar dados protegidos');
       }
     };
 
@@ -32,9 +37,15 @@ const Dashboard = () => {
     <div style={{ textAlign: 'center', marginTop: '80px' }}>
       <h2>Área Logada</h2>
       <button onClick={handleLogout}>Logout</button>
-      <pre style={{ textAlign: 'left', marginTop: '20px' }}>
-        {data ? JSON.stringify(data, null, 2) : 'Carregando dados...'}
-      </pre>
+      <div style={{ marginTop: '30px' }}>
+        {data ? (
+          <pre style={{ textAlign: 'left' }}>
+            {JSON.stringify(data, null, 2)}
+          </pre>
+        ) : (
+          <p>Carregando dados...</p>
+        )}
+      </div>
     </div>
   );
 };
