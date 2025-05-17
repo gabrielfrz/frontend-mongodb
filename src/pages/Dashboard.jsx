@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './Dashboard.css';
 import {
   getMoviesBooks,
   createMovieBook,
@@ -41,28 +42,21 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const requiredFields = ['type', 'title', 'authorOrDirector', 'genre', 'releaseYear'];
-
     for (const field of requiredFields) {
-      if (!form[field]) {
-        return toast.error(`Campo obrigatório: ${field}`);
-      }
+      if (!form[field]) return toast.error(`Campo obrigatório: ${field}`);
     }
-
     const dataToSend = {
       ...form,
       releaseYear: parseInt(form.releaseYear),
     };
-
     if (isNaN(dataToSend.releaseYear)) {
       return toast.error('Ano de lançamento inválido.');
     }
-
     try {
       if (editingId) {
         await updateMovieBook(editingId, dataToSend);
@@ -71,14 +65,7 @@ const Dashboard = () => {
         await createMovieBook(dataToSend);
         toast.success('Item criado com sucesso!');
       }
-      setForm({
-        type: 'movie',
-        title: '',
-        authorOrDirector: '',
-        genre: '',
-        releaseYear: '',
-        completed: false,
-      });
+      setForm({ type: 'movie', title: '', authorOrDirector: '', genre: '', releaseYear: '', completed: false });
       setEditingId(null);
       fetchItems();
     } catch {
@@ -116,81 +103,48 @@ const Dashboard = () => {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-      <h2 style={{ textAlign: 'center' }}>Área Logada</h2>
-      <button onClick={handleLogout} style={{ float: 'right' }}>Logout</button>
+    <div className="dashboard-container">
+      <div className="dashboard-box">
+        <div className="dashboard-header">
+          <h2>🎬 Minha Biblioteca</h2>
+          <button onClick={handleLogout} className="logout-button">Logout</button>
+        </div>
 
-      <h3>{editingId ? 'Editar Item' : 'Novo Item'}</h3>
-      <form onSubmit={handleSubmit}>
-        <select
-          value={form.type}
-          onChange={e => setForm({ ...form, type: e.target.value })}
-          style={{ width: '100%', marginBottom: '10px' }}
-        >
-          <option value="movie">Filme</option>
-          <option value="book">Livro</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Título"
-          value={form.title}
-          onChange={e => setForm({ ...form, title: e.target.value })}
-          style={{ width: '100%', marginBottom: '10px' }}
-        />
-        <input
-          type="text"
-          placeholder="Autor ou Diretor"
-          value={form.authorOrDirector}
-          onChange={e => setForm({ ...form, authorOrDirector: e.target.value })}
-          style={{ width: '100%', marginBottom: '10px' }}
-        />
-        <input
-          type="text"
-          placeholder="Gênero"
-          value={form.genre}
-          onChange={e => setForm({ ...form, genre: e.target.value })}
-          style={{ width: '100%', marginBottom: '10px' }}
-        />
-        <input
-          type="text"
-          placeholder="Ano de Lançamento"
-          value={form.releaseYear}
-          onChange={e => setForm({ ...form, releaseYear: e.target.value })}
-          style={{ width: '100%', marginBottom: '10px' }}
-        />
-        <label>
-          <input
-            type="checkbox"
-            checked={form.completed}
-            onChange={e => setForm({ ...form, completed: e.target.checked })}
-          />
-          Finalizado
-        </label>
-        <br /><br />
-        <button type="submit">{editingId ? 'Atualizar' : 'Criar'}</button>
-      </form>
+        <form onSubmit={handleSubmit} className="form-section">
+          <select value={form.type} onChange={e => setForm({ ...form, type: e.target.value })}>
+            <option value="movie">🎥 Filme</option>
+            <option value="book">📘 Livro</option>
+          </select>
+          <input type="text" placeholder="Título" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} />
+          <input type="text" placeholder="Autor ou Diretor" value={form.authorOrDirector} onChange={e => setForm({ ...form, authorOrDirector: e.target.value })} />
+          <input type="text" placeholder="Gênero" value={form.genre} onChange={e => setForm({ ...form, genre: e.target.value })} />
+          <input type="text" placeholder="Ano de Lançamento" value={form.releaseYear} onChange={e => setForm({ ...form, releaseYear: e.target.value })} />
+          <label className="checkbox-label">
+            <input type="checkbox" checked={form.completed} onChange={e => setForm({ ...form, completed: e.target.checked })} />
+            Finalizado
+          </label>
+          <button type="submit">{editingId ? 'Atualizar' : 'Criar'}</button>
+        </form>
 
-      <hr />
-      <h3>Seus itens</h3>
-      {loading ? (
-        <p>Carregando...</p>
-      ) : items.length === 0 ? (
-        <p>Nenhum item encontrado.</p>
-      ) : (
-        <ul>
-          {items.map(item => (
-            <li key={item._id} style={{ marginBottom: '15px' }}>
-              <strong>{item.title}</strong> ({item.type})<br />
-              <em>{item.authorOrDirector}</em> | {item.genre} | {item.releaseYear}<br />
-              <span>{item.completed ? '✅ Finalizado' : '⏳ Em andamento'}</span><br />
-              <button onClick={() => handleEdit(item)}>Editar</button>
-              <button onClick={() => handleDelete(item._id)} style={{ marginLeft: '10px' }}>
-                Deletar
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+        <h3>📂 Seus itens</h3>
+        {loading ? (
+          <p>Carregando...</p>
+        ) : items.length === 0 ? (
+          <p>Nenhum item encontrado.</p>
+        ) : (
+          <ul className="item-list">
+            {items.map(item => (
+              <li key={item._id} className="item">
+                <div className="item-title">{item.title} ({item.type})</div>
+                <div className="item-meta">{item.authorOrDirector} | {item.genre} | {item.releaseYear}</div>
+                <div className="item-status">{item.completed ? '✅ Finalizado' : '⏳ Em andamento'}</div>
+                <button onClick={() => handleEdit(item)} className="edit-button">Editar</button>
+                <button onClick={() => handleDelete(item._id)} className="delete-button">Deletar</button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

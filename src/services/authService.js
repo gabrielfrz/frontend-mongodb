@@ -7,7 +7,9 @@ export const registerUser = async (data) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
-  return await res.json();
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.message || 'Erro ao cadastrar');
+  return json;
 };
 
 export const loginUser = async (data) => {
@@ -16,7 +18,17 @@ export const loginUser = async (data) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
-  return await res.json();
+
+  let json;
+  try {
+    json = await res.json();
+  } catch {
+    const text = await res.text();
+    throw new Error(text || 'Erro desconhecido no login');
+  }
+
+  if (!res.ok) throw new Error(json.message || 'Credenciais inválidas');
+  return json;
 };
 
 export const getProtectedData = async () => {
