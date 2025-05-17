@@ -119,10 +119,18 @@ const Dashboard = () => {
           <input type="text" placeholder="Autor ou Diretor" value={form.authorOrDirector} onChange={e => setForm({ ...form, authorOrDirector: e.target.value })} />
           <input type="text" placeholder="Gênero" value={form.genre} onChange={e => setForm({ ...form, genre: e.target.value })} />
           <input type="text" placeholder="Ano de Lançamento" value={form.releaseYear} onChange={e => setForm({ ...form, releaseYear: e.target.value })} />
-          <label className="checkbox-label">
-            <input type="checkbox" checked={form.completed} onChange={e => setForm({ ...form, completed: e.target.checked })} />
-            Finalizado
-          </label>
+          <div className="checkbox-wrapper">
+            <input
+              type="checkbox"
+              id="completed"
+              checked={form.completed}
+              onChange={e => setForm({ ...form, completed: e.target.checked })}
+            />
+            <label htmlFor="completed" className="custom-checkbox">
+              {form.completed ? '✅ Finalizado' : '⏳ Em andamento'}
+            </label>
+          </div>
+
           <button type="submit">{editingId ? 'Atualizar' : 'Criar'}</button>
         </form>
 
