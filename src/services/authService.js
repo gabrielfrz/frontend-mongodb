@@ -1,6 +1,4 @@
 const API_URL = 'https://backend-express-eight-ashen.vercel.app';
-
-// 🔐 AUTH
 export const registerUser = async (data) => {
   const res = await fetch(`${API_URL}/user/register`, {
     method: 'POST',
