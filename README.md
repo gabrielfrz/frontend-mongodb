@@ -38,3 +38,7 @@ Esta é uma aplicação full stack desenvolvida em **React + Node.js + MongoDB**
 - 🌐 Backend com Express + MongoDB (não incluso neste repositório)
 
 
+
+
+https://github.com/user-attachments/assets/de89cd42-9998-4db6-a85b-a33dbd145481
+
