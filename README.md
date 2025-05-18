@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# 🎬 Minha Biblioteca - Aplicação Full Stack com Autenticação JWT
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Esta é uma aplicação full stack desenvolvida em **React + Node.js + MongoDB**, que permite aos usuários **cadastrarem, autenticarem e gerenciarem uma lista personalizada de filmes e livros**. Cada item pode ser marcado como "finalizado" e editado ou excluído com facilidade.
 
-## Available Scripts
+## 🚀 Funcionalidades
 
-In the project directory, you can run:
+### 🧾 Telas públicas
 
-### `npm start`
+- **Cadastro de Usuário**
+  - Nome, e-mail e senha
+  - Requisição `POST` para `/user/register`
+  - Feedback visual com `react-toastify` para sucesso ou erro
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Login**
+  - E-mail e senha
+  - Requisição `POST` para `/user/login`
+  - Armazena token JWT no `localStorage`
+  - Redireciona para a área protegida ao logar
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🔒 Área Protegida (Dashboard)
 
-### `npm test`
+- Requisições `GET`, `POST`, `PUT`, `DELETE` autenticadas para `/moviesbooks`
+- Adição e edição de **filmes/livros** com:
+  - Título, autor/diretor, gênero, ano de lançamento
+  - Checkbox estilizado para marcar como "finalizado"
+- Feedback visual com `toast` em todas as ações
+- Botão de logout que limpa o token e retorna à tela de login
+- Design moderno, responsivo e criativo com **React CSS modules**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🧪 Tecnologias utilizadas
 
-### `npm run build`
+- ⚛️ **React** com `react-router-dom` para navegação
+- 🎨 Estilização com `CSS modules`
+- 🔐 **JWT** para autenticação e controle de sessão
+- 📦 `Fetch API` para requisições HTTP
+- 📦 `React Toastify` para notificações
+- 💾 `LocalStorage` para persistência de sessão
+- 🌐 Backend com Express + MongoDB (não incluso neste repositório)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
